@@ -1,0 +1,14 @@
+name: job-agent
+channels:
+  - conda-forge
+dependencies:
+  # --- core ---
+  - python=3.12     # or 3.11 if you prefer
+  # --- dev / quality ---
+  - pytest
+  - black
+  - flake8
+  - pre-commit
+  - pip             # let pip handle anything not in Conda
+  - pip:
+      - openai      # placeholder for later
