@@ -1,0 +1,10 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+# Envs
+.env
+.venv/
+*.egg-info/
+# Tools
+.idea/
+.vscode/
