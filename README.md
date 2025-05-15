@@ -5,7 +5,6 @@ Phase 0 bootstrap — scaffolding for an automated job-search agent.
 ## Getting Started
 
 ```bash
-scripts/bootstrap.sh # one-liner setup
-conda activate job-agent
+source ./scripts/bootstrap.sh # one-liner setup
 pytest -q # sanity check
 ```
