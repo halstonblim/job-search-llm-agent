@@ -1,0 +1,21 @@
+name: CI
+on: 
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/provision-with-micromamba@v15
+        with:
+          environment-file: environment.yml
+          activate-environment: job-agent
+      - name: Install package
+        run: pip install -e .
+      - name: Run tests
+        run: pytest -q
+      - name: Run pre-commit
+        run: pre-commit run --all-files --show-diff-on-failure 

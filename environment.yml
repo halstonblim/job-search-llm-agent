@@ -3,7 +3,7 @@ channels:
   - conda-forge
 dependencies:
   # --- core ---
-  - python=3.12     # or 3.11 if you prefer
+  - python=3.12     
   # --- dev / quality ---
   - pytest
   - black
@@ -11,4 +11,4 @@ dependencies:
   - pre-commit
   - pip             # let pip handle anything not in Conda
   - pip:
-      - openai      # placeholder for later
+      - openai      
