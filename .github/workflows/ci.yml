@@ -9,13 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mamba-org/provision-with-micromamba@v15
+      - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
-          activate-environment: job-agent
+          environment-name: job-agent
       - name: Install package
         run: pip install -e .
+        shell: micromamba-shell {0}
       - name: Run tests
         run: pytest -q
+        shell: micromamba-shell {0}
       - name: Run pre-commit
-        run: pre-commit run --all-files --show-diff-on-failure 
+        run: pre-commit run --all-files --show-diff-on-failure
+        shell: micromamba-shell {0} 
