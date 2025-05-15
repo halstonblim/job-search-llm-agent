@@ -1,5 +1,15 @@
 import importlib
+import pytest
 
 
-def test_imports():
-    importlib.import_module("src")
+@pytest.mark.parametrize(
+    "module",
+    [
+        "src.fetcher",
+        "src.embedder",
+        "src.storage",
+        "src.agent",
+    ],
+)
+def test_imports(module):
+    importlib.import_module(module)
