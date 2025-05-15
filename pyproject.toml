@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "job_search_llm_agent"
+version = "0.0.1"
+description = "Automated agent to fetch, embed, and rank job postings."
+authors = [{name = "Halston Lim"}]
+readme = "README.md"
+requires-python = ">=3.12"
+
+[project.optional-dependencies]
+dev = ["pytest", "black", "flake8", "pre-commit"] 

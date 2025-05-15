@@ -1,46 +1,40 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ENV_NAME="job-agent"
+readonly ENV_NAME="job-agent"
 
-# Check if conda is initialized
-if ! command -v conda &> /dev/null; then
-    echo "Error: conda is not installed or not in PATH"
-    exit 1
-fi
+error() { echo "Error: $1" >&2; return 1; }
 
-# Get conda's base directory
+# Conda available?
+command -v conda &>/dev/null || { error "conda not found in PATH"; return 1; }
+
+# Initialise conda
 CONDA_BASE=$(conda info --base)
-CONDA_ACTIVATE="$CONDA_BASE/etc/profile.d/conda.sh"
+source "$CONDA_BASE/etc/profile.d/conda.sh" \
+  || { error "Could not source $CONDA_BASE/etc/profile.d/conda.sh"; return 1; }
 
-# Source conda's activate script
-if [ -f "$CONDA_ACTIVATE" ]; then
-    source "$CONDA_ACTIVATE"
+# Ensure environment.yml exists
+[[ -f environment.yml ]] || { error "environment.yml not found"; return 1; }
+
+# Create or update env
+if conda env list | grep -qE "^$ENV_NAME[[:space:]]"; then
+    echo "Updating env $ENV_NAME..."
+    conda env update -n "$ENV_NAME" -f environment.yml --prune \
+      || { error "Failed updating env"; return 1; }
 else
-    echo "Error: Could not find conda's activate script at $CONDA_ACTIVATE"
-    exit 1
+    echo "Creating env $ENV_NAME..."
+    conda env create -n "$ENV_NAME" -f environment.yml \
+      || { error "Failed creating env"; return 1; }
 fi
 
-# ------------------------------------------------------------------
-# 1. Create or update the Conda environment from environment.yml
-# ------------------------------------------------------------------
-if conda env list | grep -q "^$ENV_NAME "; then
-  echo "Env $ENV_NAME already exists — updating from environment.yml"
-  conda env update -n "$ENV_NAME" -f environment.yml  --prune
-else
-  echo "Creating env $ENV_NAME from environment.yml"
-  conda env create -f environment.yml
-fi
+# Activate and install editable package
+conda activate "$ENV_NAME" \
+  || { error "Could not activate $ENV_NAME"; return 1; }
 
-# ------------------------------------------------------------------
-# 2. Activate & install the repo in editable mode
-# ------------------------------------------------------------------
-conda activate "$ENV_NAME"
-# pip install -e .
+pip install -e ".[dev]" \
+  || { error "Editable install failed"; return 1; }
 
-# ------------------------------------------------------------------
-# 3. Set up git hooks
-# ------------------------------------------------------------------
-# pre-commit install
+# Install git hooks
+pre-commit install || { error "pre-commit install failed"; return 1; }
 
-echo -e "\nBootstrap complete"
+echo "Bootstrap complete – environment '$ENV_NAME' ready."
