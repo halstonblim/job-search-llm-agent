@@ -1,3 +1,4 @@
+from . import config  # noqa: F401 side-effect import: loads .env & checks keys
 from . import fetcher, storage
 
 
