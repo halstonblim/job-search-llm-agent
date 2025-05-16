@@ -16,3 +16,10 @@ pytest -q # sanity check
 1. `cp .env.example .env`
 2. Fill in real keys (OpenAI, Postgres, etc.)
 3. Re-run `./scripts/bootstrap.sh` if you added new deps 
+
+### Running the Agent
+
+Local one-shot
+```bash
+./scripts/run_once.sh
+```

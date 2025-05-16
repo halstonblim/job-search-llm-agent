@@ -12,4 +12,6 @@ dependencies:
   - pre-commit
   - pip             # let pip handle anything not in Conda
   - pip:
-      - openai      
+      - openai
+      - PyYAML
+      - apscheduler

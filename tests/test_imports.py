@@ -5,10 +5,10 @@ import pytest
 @pytest.mark.parametrize(
     "module",
     [
-        "src.fetcher",
-        "src.embedder",
-        "src.storage",
-        "src.agent",
+        "job_search_llm_agent.fetcher",
+        "job_search_llm_agent.embedder",
+        "job_search_llm_agent.storage",
+        "job_search_llm_agent.agent",
     ],
 )
 def test_imports(module):
