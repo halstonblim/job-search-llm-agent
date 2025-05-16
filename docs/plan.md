@@ -14,6 +14,8 @@ Build a publicly‑shareable, cost‑conscious agent that automatically discover
 
 # Phase 0 — Project Bootstrap (2 days)
 
+Started May 14
+
 ### Objectives
 
 Set up scaffolding so coding iterations are frictionless and reproducible.
