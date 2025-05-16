@@ -8,6 +8,7 @@ dependencies:
   - pytest
   - black
   - flake8
+  - python-dotenv
   - pre-commit
   - pip             # let pip handle anything not in Conda
   - pip:
