@@ -11,13 +11,18 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}    
     steps:
       - uses: actions/checkout@v4
-      - uses: mamba-org/provision-with-micromamba@v15
+      - uses: mamba-org/setup-micromamba@v1
         with:
           environment-file: environment.yml
-          environment-name: job-agent
+          init-shell: bash
+          cache-environment: true
+          post-cleanup: true
       - name: Install package
+        shell: bash -el {0}
         run: pip install -e .
       - name: Run tests
+        shell: bash -el {0}
         run: pytest -q
       - name: Run pre-commit
+        shell: bash -el {0}
         run: pre-commit run --all-files --show-diff-on-failure 

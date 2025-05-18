@@ -1,20 +1,31 @@
 name: Daily Job Agent
-on:
+
+"on":
   schedule:
-    # 00:00 UTC -> 6pm CST (Nov-Mar), 23:00 UTC -> 6pm CDT (Apr-Oct)
-    - cron: "0 0 * * *"
     - cron: "0 23 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: job-agent
+  cancel-in-progress: true
+
 jobs:
   run-agent:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mamba-org/provision-with-micromamba@v15
+
+      - uses: mamba-org/setup-micromamba@v1
         with:
           environment-file: environment.yml
-          environment-name: job-agent
+          init-shell: bash
+          cache-environment: true
+          post-cleanup: true
+
       - name: Install package
+        shell: bash -el {0}
         run: pip install -e .
+
       - name: Run agent once
-        run: python -m app.job_search_llm_agent.agent 
+        shell: bash -el {0}
+        run: python -m app.job_search_llm_agent.agent
