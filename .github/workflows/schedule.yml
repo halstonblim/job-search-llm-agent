@@ -20,7 +20,6 @@ jobs:
           environment-file: environment.yml
           init-shell: bash
           cache-environment: true
-          post-cleanup: true
 
       - name: Install package
         shell: bash -el {0}
@@ -29,3 +28,4 @@ jobs:
       - name: Run agent once
         shell: bash -el {0}
         run: python -m app.job_search_llm_agent.agent
+
