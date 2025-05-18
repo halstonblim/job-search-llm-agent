@@ -13,8 +13,8 @@ jobs:
       - uses: mamba-org/provision-with-micromamba@v15
         with:
           environment-file: environment.yml
-          activate-environment: job-agent
+          environment-name: job-agent
       - name: Install package
         run: pip install -e .
       - name: Run agent once
-        run: python -m job_search_llm_agent.agent 
+        run: python -m app.job_search_llm_agent.agent 

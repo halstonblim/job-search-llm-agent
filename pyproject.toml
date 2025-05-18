@@ -1,18 +1,27 @@
 [build-system]
-requires = ["setuptools>=61", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
-[project]
+[tool.poetry]
 name = "job_search_llm_agent"
 version = "0.0.1"
 description = "Automated agent to fetch, embed, and rank job postings."
-authors = [{name = "Halston Lim"}]
+authors = ["Halston Lim"]
 readme = "README.md"
-requires-python = ">=3.12"
+packages = [{include = "job_search_llm_agent"}]
 
-[project.optional-dependencies]
-dev = ["pytest", "black", "flake8", "pre-commit"]
+[tool.poetry.dependencies]
+python = ">=3.12"
 
-[tool.setuptools.packages.find]
-where = ['.']
-include = ['job_search_llm_agent*'] 
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+ruff = "^0.4.0"
+taskipy = "^1.12.0"  # lightweight task runner
+
+[tool.poetry.scripts]
+bootstrap = "app.scripts.bootstrap:main"
+
+[tool.taskipy.tasks]
+lint = "ruff check app tests"
+format = "ruff format app tests"
+test = "pytest -q" 
