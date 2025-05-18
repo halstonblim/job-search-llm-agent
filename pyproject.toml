@@ -8,7 +8,7 @@ version = "0.0.1"
 description = "Automated agent to fetch, embed, and rank job postings."
 authors = ["Halston Lim"]
 readme = "README.md"
-packages = [{include = "job_search_llm_agent"}]
+packages = [{include = "job_search_llm_agent", from = "app"}]
 
 [tool.poetry.dependencies]
 python = ">=3.12"
