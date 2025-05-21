@@ -1,0 +1,14 @@
+# fly.toml
+app       = "job-search-llm-agent"
+primary_region = "ord"
+
+[build]
+    context    = "../"
+    dockerfile = "infra/docker/Dockerfile"
+
+[env]
+  PYTHONUNBUFFERED = "true"
+
+[[mounts]]
+  source = "agent_data"
+  destination = "/data"
