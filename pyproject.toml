@@ -11,17 +11,19 @@ readme = "README.md"
 packages = [{include = "job_search_llm_agent", from = "app"}]
 
 [tool.poetry.dependencies]
-python = ">=3.12"
+python = ">=3.12,<4.0"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
 ruff = "^0.4.0"
 taskipy = "^1.12.0"  # lightweight task runner
+pytest-cov = "^6.1.1"
 
 [tool.poetry.scripts]
 bootstrap = "app.scripts.bootstrap:main"
 
 [tool.taskipy.tasks]
-lint = "ruff check app tests"
-format = "ruff format app tests"
+lint = "ruff check app"
+format = "ruff format app"
 test = "pytest -q" 
